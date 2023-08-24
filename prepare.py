@@ -15,7 +15,10 @@ input_file_path = os.path.join(os.path.dirname(__file__), 'input.txt')
 if not os.path.exists(input_file_path):
     data_url = sys.argv[1] #'https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt'
     with open(input_file_path, 'w') as f:
-        f.write(requests.get(data_url).text)
+        if data_url.startswith("http"):
+            f.write(requests.get(data_url).text)
+        else:
+            f.write(open(data_url, "r", encoding="utf-8").read())
 
 with open(input_file_path, 'r') as f:
     data = f.read()
